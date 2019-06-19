@@ -1,0 +1,4 @@
+name = "HoloJulia"
+uuid = "e0aa370e-92a7-11e9-1eea-555bdec582e8"
+authors = ["Benjamin <b.pegar@gmail.com>"]
+version = "0.1.0"
