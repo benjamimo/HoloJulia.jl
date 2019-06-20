@@ -59,7 +59,7 @@ function HoloEnsemblePC(Useed, Vsize, Hsize, XYsize, circle, N, Ne, lines, alf, 
 
         # Hologram creation
         Hologram = HoloCrea(Upc, lines, alf, kind=kk)
-        save("$dirname/$(filename)-$(lpad(memberE,3,'0')).png", colorview(Gray, Hologram))
+        save("$dirname/$(filename)-$(lpad(memberE,3,'0')).jpg", colorview(Gray, Hologram))
     end
 end
 
