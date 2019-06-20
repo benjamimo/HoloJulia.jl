@@ -1,5 +1,7 @@
 module HoloJulia
 
+using Images
+
 export HoloCrea, HoloMemberPC, HoloEnsemblePC
 
 """
