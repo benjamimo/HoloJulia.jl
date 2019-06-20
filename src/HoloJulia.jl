@@ -1,6 +1,6 @@
 module HoloJulia
 
-export HoloCrea, HoloMemberPC, HoloEnsmblePC
+export HoloCrea, HoloMemberPC, HoloEnsemblePC
 
 """
      HoloCrea(U, lines, alf, kind)
