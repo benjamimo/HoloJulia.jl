@@ -6,8 +6,17 @@ export HoloCrea, HoloMemberPC, HoloEnsemblePC
 
 """
      HoloCrea(U, lines, alf, kind)
-Creates the hologram of the desired field U """
-function HoloCrea(U, lines, alf; kind=1)
+Creates the hologram of the desired field U
+kind = 0 -- blazed grating (no apodization)
+kind = 1 -- blased grating (with apodization)
+kind = 2 -- binary grating (no apodization)
+kind = 3 -- binary grating (with apodization)
+
+bpar parameter controls the overall brightness of the hologram.
+We found that for SLM and DMD using HDMI bpar=1.0 works fine,
+whereas for fast modulation using the TI software bpar=2.0 works ok.
+"""
+function HoloCrea(U, lines, alf; kind=1, bpar=1.0)
 
     # SPATIAL SCALE
     Ux=15.36E-3;
@@ -35,11 +44,11 @@ function HoloCrea(U, lines, alf; kind=1)
     kxs = linespMM*cos(alf)
     kys = linespMM*sin(alf)
     if kind==0
-        H = 1 .*(mod.(phase .+ (kxs*Xs .+ kys*Ys), 2*pi)./pi .- 1) .+ 1;
+        H = 1.0 .*(mod.(phase .+ (kxs*Xs .+ kys*Ys), 2*pi)./pi .- 1.0) .+ 1.0;
     elseif kind==1
-        H = g .*(mod.(phase .+ (kxs*Xs .+ kys*Ys), 2*pi)./pi .- 1) .+ 1;
+        H = g .*(mod.(phase .+ (kxs*Xs .+ kys*Ys), 2*pi)./pi .- 1.0) .+ bpar;
     elseif kind==2
-        H = 1 .*(mod.(phase .+ (kxs*Xs .+ kys*Ys), 2*pi)./pi .- 1) .+ 1;
+        H = 1.0 .*(mod.(phase .+ (kxs*Xs .+ kys*Ys), 2*pi)./pi .- 1.0) .+ 1.0;
         H = round.(H./maximum(H));
     else
         H = g .*(mod.(phase .+ (kxs*Xs .+ kys*Ys), 2*pi));
@@ -61,7 +70,7 @@ function HoloEnsemblePC(Useed, Vsize, Hsize, XYsize, circle, N, Ne, lines, alf, 
 
         # Hologram creation
         Hologram = HoloCrea(Upc, lines, alf, kind=kk)
-        save("$dirname/$(filename)-$(lpad(memberE,3,'0')).png", colorview(Gray, Hologram))
+        save("$dirname/$(filename)-$(lpad(memberE,3,'0')).jpg", colorview(Gray, Hologram))
     end
 end
 
